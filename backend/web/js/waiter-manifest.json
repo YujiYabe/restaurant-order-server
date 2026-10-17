@@ -1,0 +1,17 @@
+{
+  "name": "restaurant-order-server",
+  "short_name": "restaurant-order",
+  "description": "restaurant-order-server waiter",
+  "start_url": "/v1/monitor/waiter",
+  "display": "standalone",
+  "background_color": "#33e3ff",
+  "theme_color": "#33e3ff",
+  "icons": [
+    {
+      "src": "/image/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

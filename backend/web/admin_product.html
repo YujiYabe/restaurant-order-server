@@ -1,0 +1,61 @@
+{{define "adminProduct"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/image/app-icon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/css/common.css?v={{ .Version }}" media="all">
+  <title>admin_product</title>
+</head>
+<style>
+  #content {
+    height: 1000px;
+    /* 仮のコンテンツの高さ */
+    overflow: auto;
+    /* スクロール可能にする */
+  }
+</style>
+
+<body x-data="restaurantOrderServerPage" data-page-initializer="adminProductInit" id="content" class="h-100">
+  <div id="all_product_list" style="display: none">{{ .AllProductList }}</div>
+  <div id="inventory_map" style="display: none">{{ .InventoryMap }}</div>
+
+  <div id="store_id" name="{{ .StoreID }}"></div>
+  <div id="environment" name="{{ .Environment }}"></div>
+  <div id="store_name" name="{{ .StoreName }}"></div>
+  <div id="store_address" name="{{ .StoreAddress }}"></div>
+  <div id="url" name="{{ .URL }}"></div>
+  <div id="version" name="{{ .Version }}"></div>
+
+  <script src="/js/external/cash.min.js"></script>
+  <script src="/js/alpine_app.js?v={{ .Version }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="/js/lang_set.js?v={{ .Version }}"></script>
+  <script src="/js/common.js?v={{ .Version }}"></script>
+  <script src="/js/admin_product.js?v={{ .Version }}"></script>
+
+
+  <div class=" fixed-top container text-center ">
+    <div class="alert alert-primary text-center col-12">
+      <input type="text" id="my_filter" class="input form-control form-control-lg" placeholder="キーワード入力">
+    </div>
+  </div>
+
+  <br><br><br><br>
+
+  <table id="my_table" border=1 class="table table-striped">
+    <tbody id="admin_product">
+    </tbody>
+  </table>
+
+</body>
+
+
+</html>
+{{end}}

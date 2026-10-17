@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -u
+
+repo_root="$(git rev-parse --show-toplevel)" || exit 1
+cd "$repo_root" || exit 1
+
+run_check() {
+	local check_name=$1
+	local make_target=$2
+
+	echo ""
+	echo "_____________________________________"
+	echo "Running $check_name..."
+	if ! make "$make_target"; then
+		echo "$check_name failed. Commit aborted."
+		exit 1
+	fi
+}
+
+run_check "golangci-lint" "lint"
+
+echo ""
+echo "_____________________________________"
+echo "All checks passed. Proceeding with commit."
+exit 0

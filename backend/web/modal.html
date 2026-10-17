@@ -1,0 +1,59 @@
+{{define "Modal"}}
+<div class="modal fade" id="modal" aria-hidden="true" tabindex="-1">
+  <div id="modal-size" class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <p id="modal_header_text" class="h1" style="margin: 0 auto"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div id="modal_body" class="modal-body">
+      </div>
+
+      <div id="modal_footer_normal" class="modal_footer modal-footer row mx-0" style="display: none;">
+        <button type="button" class="btn btn-secondary btn-lg py-3 col-3" id="cancel_button" data-bs-dismiss="modal">
+          キャンセル
+        </button>
+        <button type="button" class="btn btn-primary   btn-lg py-3 col-3" id="confirm_button" data-bs-toggle="popover"
+          data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+
+      <div id="modal_footer_product" class="modal_footer modal-footer row mx-0" style="display: none;">
+        <div class=" col-4 mx-auto row ">
+          <div class=" col-4 btn btn-success font-40px " onclick="countMinus()">ー</div>
+          <div class=" col-4 btn btn-white   font-40px " id="count">1</div>
+          <div class=" col-4 btn btn-success font-40px " onclick="countPlus()">＋</div>
+        </div>
+
+        <div class=" col-3 mx-auto row">
+          <div class="col-1   "></div>
+          <div class="col-10  font-40px" id="total_product_price"></div>
+          <div class="col-1   "></div>
+        </div>
+
+        <div id='confirm_button_group' class=" col-5 mx-auto row ">
+          <div class="col-5 ms-auto me-1  btn btn-lg py-4 btn-secondary " data-bs-toggle="popover"
+            data-bs-dismiss="modal">
+            キャンセル
+
+          </div>
+          <div class="col-5 ms-1  btn btn-lg py-4 btn-primary" data-bs-toggle="popover" data-bs-dismiss="modal"
+            id="confirm_button_product">
+            注文する
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+{{end}}

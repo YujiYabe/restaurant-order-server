@@ -1,0 +1,13 @@
+ENVIRONMENT: prod
+SERVER_PORT: 443
+
+# スマレジ連携設定
+AUTH_URL: https://id.smaregi.jp/app/
+API_BASE_URL: https://api.smaregi.jp/
+
+# 取引情報ゲートウェイ
+GATE_TRANSACTION_INFO_BASE_URL: https://gateway.example.com
+GATE_TRANSACTION_INFO_PATH: /transaction-info
+
+# Azure Document Intelligenceの解析エンドポイント
+AZURE_DOCUMENT_INTELLIGENCE_URL:

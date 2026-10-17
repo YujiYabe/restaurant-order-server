@@ -1,0 +1,144 @@
+@hostname=localhost
+# @hostname=192.168.10.10
+@port=6789
+
+@yakisoba=4548779706595
+@yakionig=4902150657300
+@pastaika=4548779734116
+@pastakan=4548779734192
+@dummy___=1111111111111
+
+@languageCodeJa=1041
+@languageCodeEn=1033
+@languageCodeEs=1034
+@languageCodeZh=2052
+
+@queryParam=?debug=true
+# @queryParam=?debug=false
+
+@placeNo=A1
+@deviceKey=dummy
+@contractId=dummy
+@transactionHeadIds=00
+
+
+###  ============================== receiptLine
+POST http://127.0.0.1:8080/printer1
+Content-Type: text/plain
+
+"^^^^restaurant-order-server
+"
+
+###  ============================== proxy
+POST https://127.0.0.1:5495/printer1
+Content-Type: text/plain
+
+"
+^^^^restaurant-order-server
+-
+2024/10/23-A2-0
+-
+
+^^^A2
+
+{code:3108555001; option:qrcode,8,H}
+
+-
+
+こちらのコードを会計時にご使用願います
+"
+
+
+
+
+###  ==============================
+POST https://127.0.0.1:5495/printer1
+Content-Type: text/plain
+
+"^^^^restaurant-order-server
+-
+2024/10/23-A2-0
+-
+
+^^^A2
+
+{code:3108555001; option:qrcode,8,H}
+
+-
+
+こちらのコードを会計時にご使用願います
+"
+
+
+###  ==============================
+POST https://{{hostname}}:{{port}}/v1/smaregi
+Content-Type: application/json
+
+{
+	"contractId":{{contractId}},
+	"event":"pos:temporary-transactions",
+	"action":"edited",
+	"transactionHeadIds":[{{transactionHeadIds}}]
+}
+
+
+###  ==============================
+PATCH https://{{hostname}}:{{port}}/v1/admin/product/{{yakisoba}}?device_key={{deviceKey}}
+Content-Type: application/json
+
+{
+	"place_status": 2
+}
+
+
+# Stop:0 | Wait:1 | Open:2 | Billing:3 | Reserve:4
+###  ==============================
+PATCH https://{{hostname}}:{{port}}/v1/place/{{placeNo}}
+Content-Type: application/json
+
+{
+	"place_status": 2
+}
+
+
+###  ==============================
+GET https://192.168.10.10:6789/v1/monitor/back_yard/A1
+Content-Type: application/json
+Authorization: Basic a a
+
+
+###  ==============================
+POST https://{{hostname}}:{{port}}/v1/place/{{placeNo}}/order
+Content-Type: application/json
+Authorization: Basic a a
+
+{
+	"jan_code": {{pastaika}},
+	"count": 1
+}
+
+
+###  ==============================
+POST https://{{hostname}}:{{port}}/v1/smaregi
+Content-Type: application/json
+
+{
+	"place_status": 2
+}
+
+###  ==============================
+PATCH https://{{hostname}}:{{port}}/v1/place/{{placeNo}}/order/1
+Content-Type: application/json
+
+{
+	"order_status": 2
+}
+
+###  ==============================
+GET https://{{hostname}}:{{port}}/v1/place/{{placeNo}}
+Content-Type: application/json
+
+
+
+
+

@@ -1,0 +1,236 @@
+{{define "waiter_place"}}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/image/app-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/fontawesome/css/all.min.css" />
+  <link type="text/css" rel="stylesheet" href="/css/common.css?v={{ .Version }}" media="all" />
+  <style>
+    /* body {
+      overflow-y: hidden;
+    } */
+  </style>
+  <title>waiter {{ .PlaceName }}</title>
+</head>
+
+<body x-data="restaurantOrderServerPage">
+  <div id="kind" name="waiter_place"></div>
+  <div id="place_name" name="{{ .PlaceName }}"></div>
+  <div id="permission" name=""></div>
+
+  <div id="store_id" name="{{ .StoreID }}"></div>
+  <div id="environment" name="{{ .Environment }}"></div>
+  <div id="store_name" name="{{ .StoreName }}"></div>
+  <div id="store_address" name="{{ .StoreAddress }}"></div>
+  <div id="commission" name="{{ .Commission }}"></div>
+  <div id="charge_base_price" name="{{ .ChargeBasePrice }}"></div>
+  <div id="charge_base_minute" name="{{ .ChargeBaseMinute }}"></div>
+  <div id="charge_base_capacity" name=""></div>
+  <div id="is_permit_alcohol" name="{{ .IsPermitAlcohol }}"></div>
+  <div id="is_enable_charge" name="{{ .IsEnableCharge }}"></div>
+  <div id="version" name="{{ .Version }}"></div>
+  <div id="url" name="{{ .URL }}"></div>
+  <div id="version" name="{{ .Version }}"></div>
+
+
+  <div id="status" name=""></div>
+  <div id="mini_product_map" style="display: none;">{{ .MiniProductMap }}</div>
+  <div id="tag_list" style="display: none;">{{ .TagList }}</div>
+
+
+
+
+  <!-- -------------------------------------------------------------- -->
+  <div id="body_cleaning" class="screen waiter-top bg-info-subtle font-70px ">
+    ただいま清掃中です
+  </div>
+
+
+
+  <!-- -------------------------------------------------------------- -->
+  <div id="body_opening" class="screen waiter-top bg-info-subtle font-70px text-center"
+    style="display: flex; flex-direction: column; align-items: center;">
+    <div class="rounded-pill text-center border-1 alert alert-light border-info col-4">
+      {{ .PlaceName }}
+      <div class="fas fa-lock-open"></div>
+    </div>
+
+    <div>ご利用可能です</div>
+
+    <div>受付モニターから席を確保してください</div>
+
+  </div>
+
+
+
+
+  <!-- -------------------------------------------------------------- -->
+  <div id="body_billing" class="screen vh-100 bg-info-subtle font-30px ">
+    <div id="normal_billing" class="row">
+      <br>
+      <br>
+      <br>
+      <br>
+      <hr>
+      <div class="text-center font-100px">ご利用ありがとうございました</div>
+      <div class="text-center font-80px">受付の紙でセルフレジにてお会計願います</div>
+      <br>
+      <br>
+      <br>
+
+      <hr>
+
+      <br>
+      <br>
+      <br>
+
+      <div class="row">
+
+        <div class="col-3"> </div>
+        <div class="alert alert-primary text-center border-0 col-6" onclick="showQR()">
+          受付の紙がない場合、こちらのボタンを押して下さい
+        </div>
+        <div class="col-3"> </div>
+
+
+        <div id="qr_show" class="screen vh-100 bg-info-subtle font-30px ">
+        </div>
+
+      </div>
+    </div>
+    <div id="extra_billing" class="row " style="display: none;">
+      <br>
+      <div class="text-center font-50px"></div><br>
+      <br>
+      <div class="text-center font-50px">こちらのコードをスマホで読み取ると、受付の紙と同じコードが表示されます</div>
+      <div class="text-center font-50px">※写真ではありません</div><br>
+      <br>
+      <hr>
+      <br>
+      <div class="image_qr text-center border-white "> </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- -------------------------------------------------------------- -->
+  <div id="body_stopping" class="screen waiter-top bg-info-subtle font-70px ">
+    ただいまご利用できません
+  </div>
+
+
+
+
+  <!-- -------------------------------------------------------------- -->
+  <div id="body_using" class="screen vh-100">
+    <div class="vh-100">
+      <div class=" row h-10Per">
+        <div class=" col-1"> </div>
+        <div class="col-10 container text-center row  alert alert-primary  border-white">
+          <div class="row col-12">
+            <div class="col-1 rounded page-title text-center alert alert-warning row  mx-0 p-0">
+              <div id="line_number" class="col-12 pt-2 badge bg-info"></div>
+              <div id="enter_time" class="col-12 ">0</div>
+            </div>
+
+            <div class="col-3 rounded page-title text-center alert alert-warning row  mx-0 p-0">
+              <div class="col-6 pt-2 badge bg-info">チャージ金額</div>
+              <div class="col-6 pt-2 badge bg-info">会計金額</div>
+              <div class="col-6 " id="diff_price">0</div>
+              <div class="col-6 " id="place_price">0</div>
+            </div>
+
+            <div class="col-2 rounded-pill page-title text-center alert alert-light  background-white" id="mobile"
+              onclick="changePage('mobile')">
+              <i class="fas fa-mobile-alt"></i>
+              スマホ注文
+            </div>
+
+            <div class="col-2 rounded-pill page-title text-center alert alert-light  background-white" id="tablet"
+              onclick="changePage('tablet')">
+              <i class="fas fa-desktop"></i>
+              テーブル注文
+            </div>
+
+            <div class="col-2 rounded-pill page-title text-center alert alert-light  background-white" id="history"
+              onclick="changePage('history')">
+              <i class="fas fa-receipt"></i>
+              注文履歴
+            </div>
+
+            <div class="col-2 rounded-pill page-title text-center alert alert-light  background-white" id="check">
+              <i class="fas fa-money-bill"></i>
+              お会計
+            </div>
+
+          </div>
+          <div id="debug_table" style="display: none;"></div>
+
+          <!-- スマホ注文 -->
+          <div id="body_mobile" class="page-body row h-80Per">
+            <div id="mobile_qr" class="h-80Per text-center col-8 alert alert-primary border-white overflow-y-scroll">
+              <span>こちらからお持ちのスマホでご注文できます</span>
+              <hr>
+              <div class="image_qr"> </div>
+            </div>
+            <div id="menu_util" class="h-80Per text-center col-4 alert alert-primary border-white overflow-y-scroll">
+            </div>
+
+          </div>
+
+          <!-- テーブル注文画面 -->
+          <div id="body_tablet" class="page-body row h-80Per">
+            <div id="tag_primary" class="h-80Per text-center col-2 alert alert-primary border-white overflow-y-scroll">
+            </div>
+            <div id="tag_secondary"
+              class="h-80Per text-center col-2 alert alert-primary border-white overflow-y-scroll">
+            </div>
+            <div id="menu_content"
+              class=" h-80Per text-center col-8 alert alert-primary border-white overflow-y-scroll row ms-0">
+              <div id="stock_none" class="col-12 h1 ">
+                ただいま提供できません🙇🏻
+              </div>
+            </div>
+          </div>
+
+          <!-- 注文履歴・会計 -->
+          <div id="body_history" class="page-body container row h-80Per">
+
+            <div id="order_history"
+              class="col-12 row alert alert-primary border-white mx-0 overflow-y-scroll  h-80Per ">
+            </div>
+
+          </div>
+
+        </div>
+        <div class=" col-1"> </div>
+      </div>
+
+
+    </div>
+
+    {{ template "Modal" .}}
+  </div>
+
+
+  <script src="/js/external/cash.min.js"></script>
+  <script src="/js/external/qrcode.min.js"></script>
+  <script src="/js/alpine_app.js?v={{ .Version }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="/js/lang_set.js?v={{ .Version }}"></script>
+  <script src="/js/common.js?v={{ .Version }}"></script>
+  <script src="/js/waiter_place.js?v={{ .Version }}"></script>
+  <script src="/js/receipt.js?v={{ .Version }}"></script>
+  <script src="/js/sse.js?v={{ .Version }}"></script>
+
+
+</body>
+
+</html>
+{{end}}
