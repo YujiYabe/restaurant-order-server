@@ -1,0 +1,13 @@
+ENVIRONMENT: dev
+SERVER_PORT: 443
+
+# スマレジ連携設定
+AUTH_URL: https://id.smaregi.dev/app/
+API_BASE_URL: https://api.smaregi.dev/
+
+# 取引情報ゲートウェイ
+GATE_TRANSACTION_INFO_BASE_URL: http://localhost:8080
+GATE_TRANSACTION_INFO_PATH: /transaction-info
+
+# Azure Document Intelligenceの解析エンドポイント
+AZURE_DOCUMENT_INTELLIGENCE_URL:

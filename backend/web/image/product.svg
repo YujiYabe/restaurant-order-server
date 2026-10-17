@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-labelledby="title desc">
+  <title id="title">商品画像</title>
+  <desc id="desc">商品画像のプレースホルダー</desc>
+  <rect width="720" height="720" fill="#f4f7fa"/>
+  <circle cx="360" cy="342" r="210" fill="#fff" stroke="#6c757d" stroke-width="18"/>
+  <circle cx="360" cy="342" r="145" fill="#dff4ff" stroke="#0d6efd" stroke-width="12"/>
+  <path d="M160 158v238m-42-238v150c0 44 28 78 68 88v166m416-404c-57 0-91 70-91 151 0 60 22 104 57 121v132" fill="none" stroke="#495057" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="635" text-anchor="middle" font-family="sans-serif" font-size="44" fill="#343a40">MENU ITEM</text>
+</svg>

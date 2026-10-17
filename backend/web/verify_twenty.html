@@ -1,0 +1,194 @@
+{{define "verifyTwenty"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/image/app-icon.svg" type="image/svg+xml" />
+	<title>年齢確認</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<link type="text/css" rel="stylesheet" href="/fontawesome/css/all.min.css" />
+	<link type="text/css" rel="stylesheet" href="/css/alcohol.css" media="all" />
+</head>
+
+<body x-data="restaurantOrderServerPage">
+	<div id="environment" name="{{ .Environment }}"></div>
+	<div id="url" name="{{ .URL }}"></div>
+
+
+	<div id="screen_wait" class="screen vh-100 bg-info-subtle font-20px ">
+		<br>
+		<p class="text-left">当店でお酒を購入するには、こちらから年齢認証が必要となり、<u>運転免許証</u>か<u>マイナンバー</u>で年齢認証が可能です。</p>
+		<p class="text-left">認証情報はスマートフォンに保存され、次回以降 顔認証のみで購入することができます。 </p>
+		<p class="text-left">注文の都度、本人であることを確認するため、顔認証が必要となります。 </p>
+		<p class="text-left">未成年者飲酒禁止法により20歳以上の年齢確認が義務付けられており、認証情報を別の目的に利用することはありません。 </p>
+		<br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-70px px-5 rounded-pill "
+			onclick="changeScreen('screen_main')">OK</button>
+	</div>
+
+	<div id="screen_already_exist" class="screen vh-100 bg-info-subtle font-20px " style="width: 100%; display:none;">
+		<br>
+		<p class="text-center">本日は本人確認済みです。</p>
+		<br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-70px px-5 rounded-pill "
+			onclick="returnOrderPage();">OK</button>
+	</div>
+
+	<div id="screen_main" class="screen vh-100 bg-info-subtle font-20px top-bar" style="display:none;">
+		<div class=" bg-info-subtle font-40px ">
+			<div id="mode_certificate" class="mode row mx-0 mt-2">
+				<div class=" text-center font-20px col-2 alert alert-danger mb-0 " onclick="window.close()">
+					<i class="fas fa-chevron-circle-left"></i>
+				</div>
+				<div class="certificate_button text-center font-20px col-5 alert alert-primary mb-0 "
+					id="license_driver" onclick="selectCertificate('license_driver')">
+					運転免許証
+				</div>
+				<div class="certificate_button text-center font-20px col-5 alert alert-secondary mb-0 " id="my_number"
+					onclick="selectCertificate('my_number')">
+					マイナンバー
+				</div>
+			</div>
+
+			<div id="mode_register" class="mode row mx-0 mt-2" style="display:none;">
+				<div class=" text-center font-20px col-2 alert alert-danger mb-0 " onclick="window.close()">
+					<i class="fas fa-chevron-circle-left"></i>
+				</div>
+				<div class=" text-center font-20px col-10 alert alert-primary mb-0 ">
+					顔を撮影します
+				</div>
+			</div>
+
+			<video id="video" width="640" height="480" autoplay muted playsinline></video>
+			<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+
+			<!-- シャッターボタン -->
+			<div id="shutter_block" class=" bottom-bar" style="display:none;">
+				<button id="shutter_button" class=" circle " onclick="takePhoto()">
+					<h1> </h1>
+				</button>
+			</div>
+
+			<div id="explain_block">
+				<div id="explain_certificate_block" class="text-center font-20px fixed-bottom text-primary "
+					style="display:none;">
+					<br>
+					運転免許証またはマイナンバーを
+					<br>
+					全体が映るように撮影してください。
+				</div>
+				<div id="explain_latest_face_block" class="text-center font-20px fixed-bottom" style="display:none;">
+					<br>
+					顔が写っていないか複数の顔が認識されています。
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+	<div id="screen_auth_attempt" class="screen vh-100 text-center bg-info-subtle font-20px width-100per"
+		style="display:none;">
+		<br>
+		<br>
+		<br>
+		<br>
+		<i class="fas fa-circle-notch fa-spin font-150px" style="color: #74C0FC;"></i>
+	</div>
+
+	<div id="screen_auth_success" class="screen vh-100 text-center bg-info-subtle font-20px width-100per"
+		style="display:none;">
+		<br>
+		<br>
+		<br>
+		<br>
+		年齢を確認できました。<br>
+		<div>
+			<span id="age">XX</span>
+			歳(
+			<span id="birthday">YYYY/MM/DD</span>
+			)
+		</div>
+		顔写真を撮影してください。<br><br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-70px px-5 rounded-pill "
+			onclick="changeScreen('screen_main')">OK</button>
+	</div>
+
+	<div id="screen_auth_fail" class="screen vh-100 text-center bg-info-subtle font-20px width-100per"
+		style="display:none;">
+		<br>
+		<br>
+		<br>
+		<br>
+		年齢を確認できませんでした。<br>
+		もう一度お試しください。<br><br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-70px px-5 rounded-pill "
+			onclick="location.reload();">OK</button>
+	</div>
+
+	<div id="screen_register_face_finished" class="screen vh-100 text-center bg-info-subtle font-20px width-100per"
+		style="display:none;">
+		<br>
+		<br>
+		<br>
+		<br>
+		年齢確認と本人登録が完了しました。<br>
+		<br>
+		引き続き お酒の注文には顔認証が必要になります。<br>
+		この顔認証は1日1回最初の注文の際、不正利用対策のため必要となります。<br>
+		<br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-20px px-5 rounded-pill "
+			onclick="returnOrderPage()">注文ページに戻る</button>
+	</div>
+
+	<div id="screen_verify_face_finished" class="screen vh-100 text-center bg-info-subtle font-20px width-100per"
+		style="display:none;">
+		<br>
+		<br>
+		<br>
+		<br>
+		認証が完了しました。
+		<br>
+		<br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-40px px-5 rounded-pill "
+			onclick="returnOrderPage()">注文ページに戻る</button>
+	</div>
+
+
+	<div id="screen_latest_face_fail" class="screen vh-100 text-center bg-info-subtle font-20px width-100per"
+		style="display:none;">
+		<br>
+		<br>
+		<br>
+		<br>
+		顔写真を登録できませんでした<br>
+		<button type="button" class="btn btn-primary btn-lg mx-auto d-block text-center font-20px px-5 rounded-pill "
+			onclick="changeScreen('screen_main')">戻る</button>
+	</div>
+
+	<script src="/js/external/cash.min.js"></script>
+  <script src="/js/alpine_app.js?v={{ .Version }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd" crossorigin="anonymous"></script>
+	<script src="/js/verify_twenty.js?v={{ .Version }}"></script>
+
+	<!-- 	
+	2回写真を取る
+		証明証の種類を選ぶ
+
+		証明証の写真を取る
+			桁数があっているか
+			年齢があっているか
+		OKであれば、最新の顔写真
+		NGであれば、もう一度証明写真
+-->
+
+
+
+
+</body>
+
+</html>
+{{end}}

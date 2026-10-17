@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">restaurant-order-server</title>
+  <desc id="desc">A plate with a fork and spoon</desc>
+  <rect width="512" height="512" rx="96" fill="#0d6efd"/>
+  <circle cx="256" cy="256" r="132" fill="#fff"/>
+  <circle cx="256" cy="256" r="92" fill="#dff4ff"/>
+  <path d="M106 132v116c0 27 14 48 36 57v91h32v-91c22-9 36-30 36-57V132h-24v104h-20V132h-28v104h-20V132z" fill="#fff"/>
+  <path d="M382 116c-44 0-68 51-68 105 0 42 15 73 36 86v89h32zm0 0v191c21-13 36-44 36-86 0-54-14-105-36-105z" fill="#fff"/>
+</svg>

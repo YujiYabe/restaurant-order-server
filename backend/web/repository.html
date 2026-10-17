@@ -1,0 +1,54 @@
+{{define "repository"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/image/app-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/fontawesome/css/all.min.css" />
+  <link type="text/css" rel="stylesheet" href="/css/common.css?v={{ .Version }}" media="all" />
+  <style>
+  </style>
+  <title>repository</title>
+</head>
+
+<body x-data="restaurantOrderServerPage" data-page-initializer="repositoryInit">
+  <div id="kind" name="repository"></div>
+  <div id="place_name" name="0"></div>
+  <div id="environment" name="{{ .Environment }}"></div>
+  <div id="url" name="{{ .URL }}"></div>
+  <div id="mini_product_map" style="display: none;">{{ .MiniProductMap }}</div>
+  <div id="all_table_list" style="display: none;">{{ .AllTableList }}</div>
+  <div id="version" name="{{ .Version }}"></div>
+
+  <div id="main_screen" style="display: none;">
+    <div id="body_div" class=" container-fluid text-center repo_container"></div>
+  </div>
+
+  <div id="confirm_screen" onclick="confirm()">
+    <button>
+      <div class="font-70px">注文が入るとここに表示されます</div>
+      <br>
+      <div class="font-70px">注文を渡すと表示されなくなります</div>
+      <br>
+      <div class="font-70px">画面をクリックしてください</div>
+    </button>
+  </div>
+
+
+  </div>
+
+  <script src="/js/external/cash.min.js"></script>
+  <script src="/js/alpine_app.js?v={{ .Version }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="/js/common.js?v={{ .Version }}"></script>
+  <script src="/js/repository.js?v={{ .Version }}"></script>
+  <script src="/js/sse.js?v={{ .Version }}"></script>
+</body>
+
+</html>
+{{end}}

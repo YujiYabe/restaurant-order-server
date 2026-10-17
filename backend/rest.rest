@@ -1,0 +1,77 @@
+@hostname=localhost
+# @hostname=192.168.10.10
+@port=6789
+
+@yakisoba=4548779706595
+@yakionig=4902150657300
+@pastaika=4548779734116
+@pastakan=4548779734192
+@dummy___=1111111111111
+
+@languageCodeJa=1041
+@languageCodeEn=1033
+@languageCodeEs=1034
+@languageCodeZh=2052
+
+@queryParam=?debug=true
+# @queryParam=?debug=false
+
+@placeNo=A1
+@deviceKey=dummy
+@contractId=dummy
+@transactionHeadIds=00
+
+
+
+###  ==============================
+PATCH https://{{hostname}}:{{port}}/v1/admin/product/{{yakisoba}}?device_key={{deviceKey}}
+Content-Type: application/json
+
+{
+	"place_status": 2
+}
+
+
+# Stop:0 | Wait:1 | Open:2 | Billing:3 | Reserve:4
+###  ==============================
+PATCH https://{{hostname}}:{{port}}/v1/place/{{placeNo}}
+Content-Type: application/json
+
+{
+	"place_status": 2
+}
+
+
+###  ==============================
+GET https://{{hostname}}:{{port}}/v1/monitor/back_yard/A1
+Content-Type: application/json
+Authorization: Basic a a
+
+
+###  ==============================
+POST https://{{hostname}}:{{port}}/v1/place/{{placeNo}}/order
+Content-Type: application/json
+Authorization: Basic a a
+
+{
+	"jan_code": {{pastaika}},
+	"count": 1
+}
+
+
+###  ==============================
+PATCH https://{{hostname}}:{{port}}/v1/place/{{placeNo}}/order/1
+Content-Type: application/json
+
+{
+	"order_status": 2
+}
+
+###  ==============================
+GET https://{{hostname}}:{{port}}/v1/place/{{placeNo}}
+Content-Type: application/json
+
+
+
+
+

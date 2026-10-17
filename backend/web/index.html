@@ -1,0 +1,96 @@
+{{define "index"}}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>restaurant-order-server Portal</title>
+  <link rel="icon" href="/image/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/index.css?v={{ .Version }}">
+</head>
+
+<body x-data="restaurantOrderServerPage">
+  <div id="qr-preview" class="qr-preview" hidden aria-hidden="true"></div>
+  <div class="portal">
+    <header class="portal-header">
+      <p class="eyebrow">{{ .StoreName }}</p>
+      <h1>restaurant-order-server Portal</h1>
+      <p>利用する画面を選択してください</p>
+    </header>
+
+    <main>
+      <section class="portal-section portal-section-main" aria-labelledby="main-pages">
+        <h2 id="main-pages">店舗画面</h2>
+        <div class="card-grid">
+          {{range .MainLinks}}
+          <a class="portal-card" href="{{.URL}}" target="_blank" rel="noopener noreferrer">
+            <i class="fas {{.Icon}}" aria-hidden="true"></i>
+            <strong>{{.Name}}</strong>
+            <span>{{.Description}}</span>
+          </a>
+          {{end}}
+        </div>
+      </section>
+
+      <section class="portal-section portal-section-place" aria-labelledby="place-pages">
+        <h2 id="place-pages">席別画面</h2>
+        <div class="place-groups">
+          {{range .PlaceGroups}}
+          <section class="place-group" aria-labelledby="place-group-{{.Name}}">
+            <h3 id="place-group-{{.Name}}">{{.Name}}</h3>
+            <div class="place-grid">
+              {{range .Places}}
+              <article class="place-card">
+                <h4>{{.Name}}</h4>
+                <div class="place-links">
+                  <a href="{{.BackYardURL}}" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-utensils" aria-hidden="true"></i>
+                    厨房
+                  </a>
+                  <a href="{{.WaiterURL}}" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+                    ウェイター
+                  </a>
+                  <a href="{{.MobileOrderURL}}" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                    モバイル注文
+                  </a>
+                </div>
+              </article>
+              {{end}}
+            </div>
+          </section>
+          {{else}}
+          <p class="empty-state">利用可能な席がありません。</p>
+          {{end}}
+        </div>
+      </section>
+
+      <section class="portal-section portal-section-admin" aria-labelledby="admin-pages">
+        <h2 id="admin-pages">管理・診断</h2>
+        <div class="card-grid">
+          {{range .AdminLinks}}
+          <a class="portal-card portal-card-admin" href="{{.URL}}" target="_blank" rel="noopener noreferrer">
+            <i class="fas {{.Icon}}" aria-hidden="true"></i>
+            <strong>{{.Name}}</strong>
+            <span>{{.Description}}</span>
+          </a>
+          {{end}}
+        </div>
+      </section>
+    </main>
+
+    <footer>&copy; restaurant-order-server</footer>
+  </div>
+
+  <script src="/js/external/cash.min.js"></script>
+  <script src="/js/external/qrcode.min.js"></script>
+  <script src="/js/index.js?v={{ .Version }}"></script>
+  <script src="/js/alpine_app.js?v={{ .Version }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd" crossorigin="anonymous"></script>
+</body>
+
+</html>
+{{end}}

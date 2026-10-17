@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">アレルギー情報</title>
+  <desc id="desc">注意を表す記号</desc>
+  <rect width="256" height="256" rx="28" fill="#fff4e5"/>
+  <path d="M128 31 231 216H25z" fill="#f0ad4e" stroke="#7a4a00" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M128 83v70" stroke="#382500" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="128" cy="187" r="11" fill="#382500"/>
+</svg>

@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    restart: unless-stopped
+
+  firestore:
+    build:
+      context: ./docker/firestore
+    ports:
+      - "57242:8080"
+      - "54371:4000"
+      - "53971:4400"
+      - "58000:9150"
+    volumes:
+      - firestore-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:8080').then(r=>process.exit(r.status<500?0:1)).catch(()=>process.exit(1))
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 60s
+    restart: unless-stopped
+
+volumes:
+  firestore-data:
+  redis-data:

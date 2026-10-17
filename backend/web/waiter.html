@@ -1,0 +1,95 @@
+{{define "waiter"}}
+
+<link rel="manifest" href="/js/waiter-manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', async () => {
+      try {
+        if ('{{ .Environment }}' === 'local') {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((registration) => registration.unregister()));
+          return;
+        }
+
+        await navigator.serviceWorker.register('/js/waiter-service-worker.js');
+
+        const params = new URLSearchParams(window.location.search);
+        const deviceKey = params.get('device_key');
+
+        if (deviceKey) {
+          const cache = await caches.open('restaurant-order-server-cache-v5');
+          const dynamicURL = `/v1/monitor/waiter?device_key=${deviceKey}`;
+          await cache.add(dynamicURL);
+          console.log(`動的URLをキャッシュしました: ${dynamicURL}`);
+        }
+      } catch (error) {
+        console.error('Service Workerの初期化に失敗しました:', error);
+      }
+    });
+  }
+
+</script>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/image/app-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/fontawesome/css/all.min.css" />
+  <link type="text/css" rel="stylesheet" href="/css/common.css?v={{ .Version }}" media="all" />
+  <style>
+    /* body {
+    } */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      background-color: #f0f0f0;
+      /* グレー */
+      text-align: center;
+      /* 中央揃え */
+      padding: 20px;
+      /* パディング */
+      border: 1px solid #ccc;
+      /* ボーダー */
+      overflow-y: hidden;
+    }
+  </style>
+  <title>waiter </title>
+</head>
+
+<body x-data="restaurantOrderServerPage">
+  <div id="kind" name="waiter"></div>
+  <div id="permission" name=""></div>
+
+  <div id="environment" name="{{ .Environment }}"></div>
+  <div id="url" name="{{ .URL }}"></div>
+  <div id="version" name="{{ .Version }}"></div>
+  <div id="all_table_list" style="display: none;">{{ .AllTableList }}</div>
+
+  <br>
+  <br>
+  <br>
+  <div id="head_div"></div>
+  <!-- 座席表 ------------------------------------------------ -->
+  <div id="body_div" class="  "></div>
+  </div>
+
+
+  <script src="/js/external/cash.min.js"></script>
+  <script src="/js/external/qrcode.min.js"></script>
+  <script src="/js/alpine_app.js?v={{ .Version }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="/js/lang_set.js?v={{ .Version }}"></script>
+  <script src="/js/common.js?v={{ .Version }}"></script>
+  <script src="/js/waiter.js?v={{ .Version }}"></script>
+
+
+</body>
+
+</html>
+{{end}}

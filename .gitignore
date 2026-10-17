@@ -11,23 +11,75 @@
 # Test binary, built with `go test -c`
 *.test
 
-# Code coverage profiles and other test artifacts
+# Test and coverage output
 *.out
+coverage/
 coverage.*
-!coverage.go
-*.coverprofile
-profile.cov
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
 # Go workspace file
 go.work
-go.work.sum
 
-# env file
+**/vendor/**
+**/node_modules/
+
+*-image.jpg
+*.memo
+
+# Local databases
+*.sqlite3
+*.sqlite3-journal
+
+# Secrets and local environment settings
 .env
+/backend/.env
+/backend/secret/*.json
+/backend/openssl/*.key
 
-# Editor/IDE
-# .idea/
+# Generated local TLS certificates (keep the directory itself)
+/backend/openssl/*.crt
+/backend/openssl/*.pem
+
+# Build output and temporary files
+/backend/app
+/backend/cmd/db/db
+**/bin/
+**/tmp/
+**/.next/
+
+# Local editor settings
 # .vscode/
+
+# Frontend assets served from pinned CDNs
+/backend/web/css/external/bootstrap.min.css
+/backend/web/js/external/alpine.min.js
+/backend/web/js/external/bootstrap.bundle.min.js
+
+# Unused downloaded frontend assets
+/backend/web/js/external/face-api.js
+/backend/web/js/external/face-api.js.map
+/backend/web/js/external/jsQR.js
+/backend/web/js/external/JsBarcode.all.min.js
+/backend/web/js/external/swiper-bundle.min.js
+
+# Browser ML models are not distributed.
+/backend/web/js/external/weights/
+
+# Keep only the Font Awesome runtime files and license.
+/backend/web/fontawesome/*
+!/backend/web/fontawesome/LICENSE.txt
+!/backend/web/fontawesome/css/
+/backend/web/fontawesome/css/*
+!/backend/web/fontawesome/css/all.min.css
+!/backend/web/fontawesome/webfonts/
+/backend/web/fontawesome/webfonts/*
+!/backend/web/fontawesome/webfonts/fa-regular-400.woff2
+!/backend/web/fontawesome/webfonts/fa-solid-900.woff2
+
+.favorites.json
+
+/backend/build/firestore/bin/*
+/backend/build/firestore/config/*
+task.md

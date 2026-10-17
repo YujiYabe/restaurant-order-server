@@ -1,0 +1,75 @@
+{{define "ModalInternet"}}
+<div class="modal fade" id="modal" aria-hidden="true" tabindex="-1">
+  <div id="modal-size" class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header mb-0">
+        <p id="modal_header_text" class="h1" style="margin: 0 auto"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div id="modal_body" class="modal-body">
+
+      </div>
+
+      <div id="modal_footer_verify" class="modal_footer modal-footer row mx-0" style="display: none;">
+        <div class="col-12 mx-auto row">
+          <div class="col-6 mx-auto btn btn-lg py-4 btn-secondary " data-bs-toggle="popover" data-bs-dismiss="modal">
+            キャンセル
+          </div>
+          <div id="confirm_button_verify" class="col-6 mx-auto btn btn-lg py-4 btn-primary" data-bs-toggle="popover"
+            data-bs-dismiss="modal" onclick="jumpToVerifyPage()">
+            <span id="verify_text">初回登録</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="modal_footer_product" class="modal_footer modal-footer row mx-0">
+        <div class=" col-12 mx-auto row ">
+          <div class=" col-4 btn btn-success " onclick="countMinus()">
+            <div style=" font-size: x-large;">ー</div>
+          </div>
+          <div class=" col-4 btn btn-white   ">
+            <div id="count" style=" font-size: x-large;">1</div>
+          </div>
+          <div class=" col-4 btn btn-success " onclick="countPlus()">
+            <div style=" font-size: x-large;">＋</div>
+          </div>
+        </div>
+
+        <div class=" col-12 mx-auto row">
+          <div class="col-1  "></div>
+          <div class="col-10 text-center" style=" font-size: x-large;" id="total_product_price"></div>
+          <div class="col-1  "></div>
+        </div>
+
+        <div class=" col-12 mx-auto row ">
+          <div class="col-6 mx-auto  btn btn-lg py-4 btn-secondary " data-bs-toggle="popover" data-bs-dismiss="modal">
+            キャンセル
+
+          </div>
+          <div class="col-6 mx-auto  btn btn-lg py-4 btn-primary" data-bs-toggle="popover" data-bs-dismiss="modal"
+            id="confirm_button_product">
+            注文する
+          </div>
+
+        </div>
+      </div>
+
+      <div id="modal_footer_normal" class="modal_footer modal-footer row mx-0" style="display: none;">
+        <button type="button" class="btn btn-secondary btn-lg py-3 col-3" id="cancel_button"
+          data-bs-dismiss="modal">キャンセル</button>
+        <button type="button" class="btn btn-primary   btn-lg py-3 col-3" id="confirm_button" data-bs-toggle="popover"
+          data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+{{end}}

@@ -1,0 +1,75 @@
+# 説明。 
+# Xn                          場所の名前。 
+  # capacity    : 4           場所の収容人数。この人数によってチャージ料金が変わる。 
+  # place_group : "X"         場所のグループ名。 収容人数毎のグループと配置による。 
+  # place_name  : "A1"        場所の 名前 
+  # place_status: 1           場所のステータス システムで変更可能 
+  # line_number : 0           場所が使用可能ステータスに変更される都度インクリメントされる。日付が変わるとリセットされる
+  # customer_id : 3178601000  スマレジ側の精算時ひも付け番号。
+  #                           郵便番号 3178601  
+  #                           店番号   0        0〜9  同じ郵便番号内の住所で最大10店
+  #                           席番号   00      00〜99 1店舗内で最大100席
+  # place_status 一覧
+  # placeStatusCleaning = 0; // 掃除中
+  # placeStatusOpening  = 1; // 店頭で席を確保する 開始前の状況
+  # placeStatusUsing    = 2; // オーダー可能状況
+  # placeStatusBilling  = 3; // 支払い中
+  # placeStatusStopping = 4; // 停止中
+
+
+A1:
+  capacity: 2
+  place_group: "A"
+  place_name: "A1"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601000
+A2:
+  capacity: 2
+  place_group: "A"
+  place_name: "A2"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601001
+A3:
+  capacity: 2
+  place_group: "A"
+  place_name: "A3"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601002
+A4:
+  capacity: 2
+  place_group: "A"
+  place_name: "A4"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601003
+B1:
+  capacity: 4
+  place_group: "B"
+  place_name: "B1"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601010
+B2:
+  capacity: 4
+  place_group: "B"
+  place_name: "B2"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601011
+B3:
+  capacity: 4
+  place_group: "B"
+  place_name: "B3"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601012
+B4:
+  capacity: 4
+  place_group: "B"
+  place_name: "B4"
+  place_status: 1
+  line_number: 1
+  customer_id: 3178601013
