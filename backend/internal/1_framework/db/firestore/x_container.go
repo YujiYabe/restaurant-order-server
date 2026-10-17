@@ -21,7 +21,7 @@ const (
 )
 
 type (
-	// Firestore接続
+	// Firestore は、Firestoreへの接続を保持します。
 	Firestore struct {
 		ConnCertificate *firestore.Client
 		ConnOrder       *firestore.Client

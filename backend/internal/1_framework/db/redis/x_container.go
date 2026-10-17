@@ -11,7 +11,7 @@ import (
 )
 
 type (
-	// Redis接続
+	// Redis は、Redisへの接続を保持します。
 	Redis struct {
 		Conn *redis.Client
 	}

@@ -14,7 +14,7 @@ import (
 )
 
 type (
-	// SQLite接続
+	// Sqlite は、SQLiteへの接続を保持します。
 	Sqlite struct {
 		Conn *gorm.DB
 	}

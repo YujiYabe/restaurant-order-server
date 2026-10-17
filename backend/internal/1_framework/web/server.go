@@ -18,7 +18,7 @@ import (
 )
 
 type (
-	// Webサーバー
+	// Web は、Webサーバーとコントローラーを保持します。
 	Web struct {
 		EchoEcho   *echo.Echo
 		Controller controller.ToController
