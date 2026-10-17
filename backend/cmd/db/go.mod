@@ -4,8 +4,8 @@ go 1.27.1
 
 require (
 	github.com/mattn/go-sqlite3 v1.14.49
-	gorm.io/driver/sqlite v1.5.7
-	gorm.io/gorm v1.26.0
+	gorm.io/driver/sqlite v1.6.0
+	gorm.io/gorm v1.31.2
 )
 
 require (
