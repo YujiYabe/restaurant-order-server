@@ -50,7 +50,7 @@ go.work
 **/.next/
 
 # Local editor settings
-.vscode/
+# .vscode/
 
 # Frontend assets served from pinned CDNs
 /backend/web/css/external/bootstrap.min.css

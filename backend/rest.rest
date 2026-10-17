@@ -22,65 +22,6 @@
 @transactionHeadIds=00
 
 
-###  ============================== receiptLine
-POST http://127.0.0.1:8080/printer1
-Content-Type: text/plain
-
-"^^^^restaurant-order-server
-"
-
-###  ============================== proxy
-POST https://127.0.0.1:5495/printer1
-Content-Type: text/plain
-
-"
-^^^^restaurant-order-server
--
-2024/10/23-A2-0
--
-
-^^^A2
-
-{code:3108555001; option:qrcode,8,H}
-
--
-
-こちらのコードを会計時にご使用願います
-"
-
-
-
-
-###  ==============================
-POST https://127.0.0.1:5495/printer1
-Content-Type: text/plain
-
-"^^^^restaurant-order-server
--
-2024/10/23-A2-0
--
-
-^^^A2
-
-{code:3108555001; option:qrcode,8,H}
-
--
-
-こちらのコードを会計時にご使用願います
-"
-
-
-###  ==============================
-POST https://{{hostname}}:{{port}}/v1/smaregi
-Content-Type: application/json
-
-{
-	"contractId":{{contractId}},
-	"event":"pos:temporary-transactions",
-	"action":"edited",
-	"transactionHeadIds":[{{transactionHeadIds}}]
-}
-
 
 ###  ==============================
 PATCH https://{{hostname}}:{{port}}/v1/admin/product/{{yakisoba}}?device_key={{deviceKey}}
@@ -102,7 +43,7 @@ Content-Type: application/json
 
 
 ###  ==============================
-GET https://192.168.10.10:6789/v1/monitor/back_yard/A1
+GET https://{{hostname}}:{{port}}/v1/monitor/back_yard/A1
 Content-Type: application/json
 Authorization: Basic a a
 
@@ -117,14 +58,6 @@ Authorization: Basic a a
 	"count": 1
 }
 
-
-###  ==============================
-POST https://{{hostname}}:{{port}}/v1/smaregi
-Content-Type: application/json
-
-{
-	"place_status": 2
-}
 
 ###  ==============================
 PATCH https://{{hostname}}:{{port}}/v1/place/{{placeNo}}/order/1
